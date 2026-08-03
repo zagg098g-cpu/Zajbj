@@ -1,0 +1,848 @@
+<html lang="en">  
+  <head>    
+    <meta charset="UTF-8" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />    
+    <title>𝗚𝗫 𝗙𝗢𝗥𝗜𝗗𝗨𝗟 𝗩𝗜𝗣 𝗖𝗛𝗔𝗡𝗡𝗘𝗟</title>    
+    <style>      
+        * {            
+            user-select: none;            
+            -webkit-tap-highlight-color: transparent;            
+            box-sizing: border-box;        
+        }
+        
+        :root {            
+            /* Hyper Neon RGB Colors */
+            --rgb-red: #ff0055;
+            --rgb-green: #00ff66;
+            --rgb-blue: #00f0ff;
+            --rgb-purple: #bd00ff;
+            --rgb-yellow: #ffea00;
+            --panel-dark: rgba(6, 10, 20, 0.94);
+        }
+        
+        body, html {            
+            margin: 0;            
+            padding: 0;            
+            width: 100%;            
+            height: 100%;            
+            overflow: hidden;            
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;            
+            background: #02060e;        
+        }
+        
+        /* Game Background Frame */        
+        .game-frame {            
+            position: absolute;            
+            top: 0;            
+            left: 0;            
+            width: 100%;            
+            height: 100%;            
+            border: none;            
+            z-index: 1;        
+        }
+        
+        /* Main Floating UI Panel */        
+        .drag-widget {            
+            position: fixed;            
+            z-index: 2147483647 !important;             
+            background: var(--panel-dark);
+            backdrop-filter: blur(15px);            
+            -webkit-backdrop-filter: blur(15px);            
+            border-radius: 22px;            
+            border: 2px solid var(--rgb-blue);            
+            touch-action: none;            
+            pointer-events: auto !important;
+            
+            /* Continuous RGB Flow Animation */
+            animation: super-rgb-cycle 6s linear infinite;
+        }
+
+        /* 3D Cyberpunk Wings/ডানা Design Implementation */
+        .drag-widget::before, .drag-widget::after {
+            content: "";
+            position: absolute;
+            top: 15%;
+            width: 45px;
+            height: 110px;
+            background: transparent;
+            border-radius: 50% 50% 0 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.85;
+        }
+
+        /* Left Wing (বাম পাশের ডানা) */
+        .drag-widget::before {
+            left: -42px;
+            border-left: 5px double var(--rgb-blue);
+            border-top: 4px solid var(--rgb-purple);
+            transform: rotate(-25deg);
+            box-shadow: -8px 0 15px rgba(0, 240, 255, 0.4);
+            animation: left-wing-flap 3s ease-in-out infinite alternate, wing-rgb-sync 6s linear infinite;
+        }
+
+        /* Right Wing (ডান পাশের ডানা) */
+        .drag-widget::after {
+            right: -42px;
+            border-right: 5px double var(--rgb-blue);
+            border-top: 4px solid var(--rgb-purple);
+            transform: rotate(25deg);
+            box-shadow: 8px 0 15px rgba(0, 240, 255, 0.4);
+            animation: right-wing-flap 3s ease-in-out infinite alternate, wing-rgb-sync 6s linear infinite;
+        }
+
+        /* Wings Flapping Animation (ডানা ঝাপটানোর রিয়েল ইফেক্ট) */
+        @keyframes left-wing-flap {
+            0% { transform: rotate(-20deg) scaleX(1); }
+            100% { transform: rotate(-35deg) scaleX(0.85); }
+        }
+        @keyframes right-wing-flap {
+            0% { transform: rotate(20deg) scaleX(1); }
+            100% { transform: rotate(35deg) scaleX(0.85); }
+        }
+
+        /* Sync Wings Color with RGB Panel Border */
+        @keyframes wing-rgb-sync {
+            0%, 100% { border-color: var(--rgb-red); filter: drop-shadow(0 0 8px var(--rgb-red)); }
+            25% { border-color: var(--rgb-blue); filter: drop-shadow(0 0 8px var(--rgb-blue)); }
+            50% { border-color: var(--rgb-green); filter: drop-shadow(0 0 8px var(--rgb-green)); }
+            75% { border-color: var(--rgb-purple); filter: drop-shadow(0 0 8px var(--rgb-purple)); }
+        }
+        
+        /* 360 Degree Neon RGB Gradient Border Animation */
+        @keyframes super-rgb-cycle {
+            0% {
+                border-color: var(--rgb-red);
+                box-shadow: 0 0 22px rgba(255, 0, 85, 0.5), inset 0 0 12px rgba(255, 0, 85, 0.2);
+            }
+            25% {
+                border-color: var(--rgb-blue);
+                box-shadow: 0 0 22px rgba(0, 240, 255, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.2);
+            }
+            50% {
+                border-color: var(--rgb-green);
+                box-shadow: 0 0 22px rgba(0, 255, 102, 0.5), inset 0 0 12px rgba(0, 255, 102, 0.2);
+            }
+            75% {
+                border-color: var(--rgb-purple);
+                box-shadow: 0 0 22px rgba(189, 0, 255, 0.5), inset 0 0 12px rgba(189, 0, 255, 0.2);
+            }
+            100% {
+                border-color: var(--rgb-red);
+                box-shadow: 0 0 22px rgba(255, 0, 85, 0.5), inset 0 0 12px rgba(255, 0, 85, 0.2);
+            }
+        }
+
+        #main-panel {            
+            top: 100px;            
+            left: calc(50% - 95px); /* Perfectly centered on start */           
+            width: 190px;            
+            padding: 16px 14px;        
+        }
+        
+        /* Branding & Header */        
+        .widget-header {            
+            text-align: center;            
+            margin-bottom: 14px;        
+        }        
+        .brand-logo {            
+            width: 58px;            
+            height: 58px;            
+            border-radius: 50%;            
+            border: 2px solid transparent;            
+            object-fit: cover;            
+            margin-bottom: 8px;        
+            animation: logo-rgb-glow 4s linear infinite;
+        }
+        @keyframes logo-rgb-glow {
+            0% { border-color: var(--rgb-blue); filter: drop-shadow(0 0 5px var(--rgb-blue)); }
+            50% { border-color: var(--rgb-red); filter: drop-shadow(0 0 5px var(--rgb-red)); }
+            100% { border-color: var(--rgb-blue); filter: drop-shadow(0 0 5px var(--rgb-blue)); }
+        }               
+        
+        .brand-name {            
+            font-size: 13.5px;            
+            font-weight: 900;            
+            color: #ffffff;
+            text-align: center;            
+            text-shadow: 0 0 10px var(--rgb-blue), 0 0 20px var(--rgb-blue);            
+            letter-spacing: 0.5px;            
+            margin: 2px 0;        
+        }        
+        .sub {            
+            font-size: 8.5px;            
+            color: var(--rgb-green);            
+            font-weight: 800;            
+            text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);            
+            letter-spacing: 1px;        
+        }
+        
+        /* Screens Styles */        
+        .screen {            
+            display: none !important;        
+        }        
+        .screen.active {            
+            display: block !important;        
+        }
+        
+        /* Neon Inputs */        
+        .glass-input {            
+            width: 100%;            
+            padding: 11px;            
+            background: rgba(255, 255, 255, 0.04) !important;            
+            border: 1.5px solid rgba(0, 240, 255, 0.3);            
+            border-radius: 12px;            
+            color: #ffffff !important;            
+            font-size: 12px;            
+            font-weight: 700;            
+            text-align: center;            
+            margin: 14px auto;            
+            display: block;            
+            outline: none;            
+            user-select: text !important;             
+            pointer-events: auto !important;        
+            transition: all 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.1);
+        }
+        .glass-input:focus {
+            border-color: var(--rgb-red);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+            background: rgba(255, 0, 85, 0.05) !important;
+        }
+                
+        /* Custom Neon Premium Buttons */
+        .btn-gold {            
+            width: 100%;            
+            background: linear-gradient(135deg, var(--rgb-red), #990033);            
+            border: 1px solid rgba(255, 255, 255, 0.2);            
+            padding: 11px 0;            
+            border-radius: 12px;            
+            color: #ffffff;            
+            font-weight: 800;            
+            font-size: 11px;            
+            cursor: pointer;            
+            margin-top: 8px;            
+            pointer-events: auto !important;        
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }        
+        .btn-gold:active { transform: scale(0.95); }
+        
+        .btn-outline {            
+            width: 100%;            
+            background: rgba(0, 240, 255, 0.05);            
+            border: 1.5px solid var(--rgb-blue);            
+            border-radius: 12px;            
+            padding: 10px 0;            
+            color: #ffffff;            
+            font-size: 10.5px;            
+            font-weight: 800;            
+            margin-top: 8px;            
+            cursor: pointer;        
+            transition: all 0.2s ease;
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+        }
+        .btn-outline:active { transform: scale(0.95); background: rgba(0, 240, 255, 0.2); }
+        
+        /* Prediction Elements */        
+        .prediction-big {            
+            font-size: 36px;            
+            font-weight: 900;            
+            text-align: center;            
+            margin-top: 10px;            
+            letter-spacing: 1px;
+        }        
+        .prediction-num {            
+            font-size: 13.5px;            
+            font-weight: 900;            
+            text-align: center;            
+            color: #ffffff;            
+            width: fit-content;            
+            padding: 4px 16px;            
+            margin: 0 auto 10px auto;            
+            border-radius: 8px;        
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }        
+        .meta-row {            
+            display: flex;            
+            justify-content: center;            
+            background: rgba(0, 0, 0, 0.6);            
+            padding: 7px 12px;            
+            border-radius: 10px;            
+            margin: 12px 0;        
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }        
+        .timer-text {            
+            font-family: 'Courier New', Courier, monospace;            
+            font-size: 16px;            
+            font-weight: 900;            
+            color: var(--rgb-yellow); 
+            text-shadow: 0 0 8px rgba(255, 234, 0, 0.6);
+        }
+        
+        .nav-footer {            
+            display: flex;            
+            justify-content: center;            
+            margin-top: 12px;        
+        }        
+        .tiny-btn {            
+            background: rgba(255, 255, 255, 0.05);            
+            border: 1px solid rgba(0, 240, 255, 0.3);            
+            border-radius: 8px;            
+            text-align: center;            
+            font-size: 10px;            
+            padding: 8px 22px;            
+            cursor: pointer;            
+            color: var(--rgb-blue);            
+            font-weight: 800;        
+            transition: all 0.2s ease;
+        }    
+        .tiny-btn:active { background: rgba(0, 240, 255, 0.15); }
+    </style>  
+  </head>  
+  <body>    
+    <iframe class="game-frame" src="https://dkwin9.com/#/register?invitationCode=42622104467"></iframe>        
+    
+    <div id="main-panel" class="drag-widget">            
+      
+      <!-- Screen 1: Login Screen -->
+      <div id="loginScreen" class="screen">        
+        <div class="widget-header">          
+          <img class="brand-logo" src="https://i.postimg.cc/XYQ1XXFn/photo-2026-06-21-13-47-36.jpg" alt="Logo" />          
+          <div class="brand-name">𝗚𝗫 𝗙𝗢𝗥𝗜𝗗𝗨𝗟 𝗩𝗜𝗣</div>          
+          <div class="sub">PREDICTION ENGINE</div>        
+        </div>        
+        <input type="password" id="passwordInput" class="glass-input" placeholder="ENTER ACCESS KEY" />        
+        <button class="btn-gold" onclick="verifyPassword()">UNLOCK SYSTEM</button>        
+        <div class="nav-footer">          
+          <div class="tiny-btn" onclick="openTelegram()">📢 TELEGRAM</div>        
+        </div>      
+      </div>            
+      
+      <!-- Screen 2: Mode Selection -->
+      <div id="serverScreen" class="screen">        
+        <div class="widget-header">          
+          <img class="brand-logo" src="https://i.postimg.cc/XYQ1XXFn/photo-2026-06-21-13-47-36.jpg" alt="Logo" />          
+          <div class="brand-name">𝗚𝗫 𝗙𝗢𝗥𝗜𝗗𝗨𝗟 𝗩𝗜𝗣</div>          
+          <div class="sub">SELECT GAME MODE</div>        
+        </div>        
+        <button class="btn-gold" style="background: linear-gradient(135deg, #0077b6, #00f0ff); box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);" onclick="selectGameMode('1M')">⚡️ WINGO 1 MIN</button>        
+        <button class="btn-outline" onclick="selectGameMode('30S')">🔥 WINGO 30 SEC</button>      
+      </div>            
+      
+      <!-- Screen 3: Engine Dash -->
+      <div id="engineScreen" class="screen">        
+        <div class="widget-header">          
+          <img class="brand-logo" src="https://i.postimg.cc/XYQ1XXFn/photo-2026-06-21-13-47-36.jpg" alt="Logo" />          
+          <div class="brand-name">𝗚𝗫 𝗙𝗢𝗥𝗜𝗗𝗨𝗟 𝗩𝗜𝗣</div>        
+        </div>        
+        <div id="periodDisplay" style="font-size: 9.5px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 5px; text-align: center; color: #ffffff; font-weight: bold; letter-spacing: 0.5px;">PERIOD: ---</div>        
+        <div id="predictionValue" class="prediction-big" style="color:var(--rgb-green); text-shadow: 0 0 15px var(--rgb-green);">---</div>        
+        <div id="predictionNumber" class="prediction-num">NUM: --</div>                
+        <div class="meta-row">          
+          <span id="timerCountdown" class="timer-text">⏱️ 00s</span>        
+        </div>      
+      </div>    
+    </div>        
+    
+    <script>    
+    const CONFIG = {        
+        password: "111222",         
+        telegramLink: "https://t.me/GX_FORIDUL_VIP_CHANNEL",     
+    };    
+    const NUMBER_COLORS = {        
+        0: { bg: 'linear-gradient(135deg, #00ff66, #ff0055)', text: '#ffffff' },         
+        5: { bg: 'linear-gradient(135deg, #00ff66, #bd00ff)', text: '#ffffff' },         
+        1: { bg: 'var(--rgb-red)', text: '#ffffff' }, 3: { bg: 'var(--rgb-red)', text: '#ffffff' }, 7: { bg: 'var(--rgb-red)', text: '#ffffff' }, 9: { bg: 'var(--rgb-red)', text: '#ffffff' },        
+        2: { bg: 'var(--rgb-blue)', text: '#000000' }, 4: { bg: 'var(--rgb-blue)', text: '#000000' }, 6: { bg: 'var(--rgb-blue)', text: '#000000' }, 8: { bg: 'var(--rgb-blue)', text: '#000000' }    
+    };    
+    let currentMode = null, engineActive = false, apiBaseUrl = "", lastIssueNumber = "", currentPredictionObj = null, intervalID = null;                  
+    
+    const loginScr = document.getElementById('loginScreen');    
+    const serverScr = document.getElementById('serverScreen');    
+    const engineScr = document.getElementById('engineScreen');    
+    const mainPanel = document.getElementById('main-panel');    
+    const periodSpan = document.getElementById('periodDisplay');    
+    const predictionDiv = document.getElementById('predictionValue');    
+    const predictionNumDiv = document.getElementById('predictionNumber');    
+    const timerSpan = document.getElementById('timerCountdown');    
+    
+    function setActiveScreen(screenId) {        
+        loginScr.setAttribute('style', 'display: none !important');        
+        serverScr.setAttribute('style', 'display: none !important');        
+        engineScr.setAttribute('style', 'display: none !important');                
+        if(screenId === 'login') {            
+            loginScr.setAttribute('style', 'display: block !important');        
+        } else if(screenId === 'server') {            
+            serverScr.setAttribute('style', 'display: block !important');        
+        } else if(screenId === 'engine') {            
+            engineScr.setAttribute('style', 'display: block !important');        
+        }    
+    }    
+    
+    window.verifyPassword = function() {        
+        const inputPass = document.getElementById('passwordInput').value.trim();        
+        if(inputPass === CONFIG.password) {            
+            setActiveScreen('server');        
+        } else {            
+            alert("⛔️ ACCESS DENIED! Wrong Password.");        
+        }    
+    };    
+    
+    window.openTelegram = function() { window.open(CONFIG.telegramLink, '_blank'); };    
+    
+    window.selectGameMode = function(mode) {        
+        currentMode = mode;        
+        if(intervalID) clearInterval(intervalID);        
+        lastIssueNumber = ""; currentPredictionObj = null;                
+        apiBaseUrl = (mode === '1M')             
+            ? "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?pageNo=1&pageSize=50"            
+            : "https://draw.ar-lottery01.com/WinGo/WinGo_30S/GetHistoryIssuePage.json?pageNo=1&pageSize=50";                
+        engineActive = true;        
+        setActiveScreen('engine');        
+        startPredictionEngine();    
+    };    
+    
+    async function fetchAndAnalyze() {        
+        if(!engineActive || !apiBaseUrl) return;        
+        try {            
+            const response = await fetch(apiBaseUrl);            
+            const json = await response.json();            
+            if(!json || !json.data || !json.data.list || json.data.list.length === 0) return;                        
+            
+            const latestItem = json.data.list[0];                  
+            const currentIssue = latestItem.issueNumber;            
+            const currentNumber = latestItem.number;                
+            const numericValue = parseInt(currentNumber, 10);            
+            
+            // নিখুঁত লজিক গার্ড: ০-৪ = SMALL, ৫-৯ = BIG
+            const actualResult = (numericValue >= 5) ? "BIG" : "SMALL";                        
+            lastIssueNumber = currentIssue;            
+            const nextIssueId = (BigInt(currentIssue) + 1n).toString();                        
+            
+            if(!currentPredictionObj || currentPredictionObj.id !== nextIssueId) {                
+                let predictedBS = (Math.random() < 0.08) ? ((actualResult === "BIG") ? "SMALL" : "BIG") : actualResult;                
+                let luckyNum = (predictedBS === "BIG") ? Math.floor(Math.random() * 5) + 5 : Math.floor(Math.random() * 5);                                
+                
+                if (luckyNum >= 5) { predictedBS = "BIG"; } else { predictedBS = "SMALL"; }
+                
+                currentPredictionObj = { id: nextIssueId, bs: predictedBS, num: luckyNum };                                
+                
+                predictionDiv.innerText = predictedBS;                
+                if(predictedBS === "BIG") {
+                    predictionDiv.style.color = "var(--rgb-green)";
+                    predictionDiv.style.textShadow = "0 0 15px var(--rgb-green)";
+                } else {
+                    predictionDiv.style.color = "var(--rgb-red)";
+                    predictionDiv.style.textShadow = "0 0 15px var(--rgb-red)";
+                }                                
+                const numStyle = NUMBER_COLORS[luckyNum] || { bg: '#fff', text: '#000' };                
+                predictionNumDiv.innerText = `NUM: ${luckyNum}`;                
+                predictionNumDiv.style.background = numStyle.bg;                
+                predictionNumDiv.style.color = numStyle.text;                
+                periodSpan.innerText = `PERIOD: ${nextIssueId.slice(-5)}`;            
+            }        
+        } catch(err) { console.warn(err); }    
+    }        
+    
+    function startPredictionEngine() {        
+        if(intervalID) clearInterval(intervalID);        
+        fetchAndAnalyze();        
+        intervalID = setInterval(async () => {            
+            if(!engineActive) return;            
+            const seconds = new Date().getSeconds();            
+            let remaining = (currentMode === '1M') ? (60 - seconds) : ((30 - (seconds % 30)) % 30 || 30);            
+            timerSpan.innerText = `⏱️ ${remaining}s`;            
+            await fetchAndAnalyze();        
+        }, 1000);    
+    }        
+    
+    function makeDraggable(element) {        
+        let isDragging = false, startX = 0, startY = 0, initialLeft = 0, initialTop = 0;        
+        const onMouseMove = (e) => {            
+            if (!isDragging) return;            
+            let clientX = e.touches ? e.touches[0].clientX : e.clientX;            
+            let clientY = e.touches ? e.touches[0].clientY : e.clientY;            
+            element.style.left = Math.min(Math.max(0, initialLeft + (clientX - startX)), window.innerWidth - element.offsetWidth) + "px";            
+            element.style.top = Math.min(Math.max(0, initialTop + (clientY - startY)), window.innerHeight - element.offsetHeight) + "px";        
+        };        
+        const onMouseUp = () => {            
+            isDragging = false;            
+            document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp);            
+            document.removeEventListener('touchmove', onMouseMove); document.removeEventListener('touchend', onMouseUp);        
+        };        
+        const startDrag = (e) => {            
+            if(e.target.tagName === 'INPUT' || e.target.closest('button') || e.target.closest('.tiny-btn')) return;            
+            isDragging = true;            
+            startX = e.touches ? e.touches[0].clientX : e.clientX;            
+            startY = e.touches ? e.touches[0].clientY : e.clientY;            
+            initialLeft = parseFloat(element.style.left) || element.offsetLeft;            
+            initialTop = parseFloat(element.style.top) || element.offsetTop;            
+            document.addEventListener('mousemove', onMouseMove); document.addEventListener('mouseup', onMouseUp);            
+            document.addEventListener('touchmove', onMouseMove, { passive: false }); document.addEventListener('touchend', onMouseUp);        
+        };        
+        element.addEventListener('mousedown', startDrag);        
+        element.addEventListener('touchstart', startDrag, { passive: false });    
+    }    
+    makeDraggable(mainPanel);    
+    document.getElementById('passwordInput').addEventListener('keydown', function(e) {        
+        if(e.key === 'Enter') { verifyPassword(); }    
+    });    
+    window.addEventListener('DOMContentLoaded', () => { setActiveScreen('login'); });    
+    </script>  
+  </body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>MITHUN VAI OWENER</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --glow-cyan: #00f3ff;
+            --glow-magenta: #ff00ff;
+            --core-bg: rgba(5, 10, 15, 0.98);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden; background: #000;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .game-container { position: absolute; inset: 0; z-index: 1; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Main Orb UI */
+        .cyber-orb {
+            position: fixed;
+            top: 150px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            z-index: 9999;
+            touch-action: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: move; /* Dragging indicator */
+        }
+
+        .orb-outer-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px dashed var(--glow-cyan);
+            border-radius: 50%;
+            animation: rotate 15s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .orb-core {
+            width: 135px;
+            height: 135px;
+            background: var(--core-bg);
+            border: 1.5px solid var(--glow-magenta);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2), inset 0 0 15px rgba(0, 243, 255, 0.1);
+            position: relative;
+            padding: 10px;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
+        }
+
+        .orb-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 7px;
+            font-weight: 700;
+            color: var(--glow-cyan);
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+            text-align: center;
+            max-width: 110px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #orb-clock {
+            font-size: 8px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .result-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .res-val {
+            font-size: 15px;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--glow-magenta);
+            margin-bottom: 2px;
+        }
+
+        .timer-box {
+            font-size: 10px;
+            color: var(--glow-cyan);
+            background: rgba(0, 243, 255, 0.1);
+            padding: 1px 6px;
+            border-radius: 10px;
+        }
+
+        .orb-input {
+            width: 80%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--glow-cyan);
+            color: white;
+            text-align: center;
+            font-size: 10px;
+            margin: 10px 0;
+            outline: none;
+        }
+
+        .orb-btn {
+            background: linear-gradient(45deg, var(--glow-cyan), var(--glow-magenta));
+            color: #000;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 8px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .orb-footer {
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .tg-orb {
+            font-size: 7px;
+            text-decoration: none;
+            color: #fff;
+            background: #0088cc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .orb-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 2px;
+        }
+
+        .action-icon {
+            font-size: 9px;
+            color: #666;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .action-icon:hover { color: #fff; }
+
+        /* Custom Mini Image Orb */
+        #mini-orb {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            width: 55px;
+            height: 55px;
+            background: var(--core-bg);
+            border: 2px solid var(--glow-cyan);
+            border-radius: 50%;
+            display: none;
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--glow-cyan);
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        #mini-orb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <iframe src="https://dkwin12.com/#/register?invitationCode=13432437709"></iframe>
+    </div>
+
+    <!-- Main Orb UI (লগইনের আগেও ড্র্যাগ করা যাবে) -->
+    <div class="cyber-orb" id="dragOrb">
+        <div class="orb-outer-ring"></div>
+        <div class="orb-core">
+            <div class="orb-header">𝑴𝑰𝑻𝑯𝑼𝑵 𝑽𝑨𝑰 𝑶𝑾𝑵𝑬𝑹 ♡</div>
+            <div id="orb-clock">00:00:00</div>
+
+            <!-- Login Panel -->
+            <div id="orb-login" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <input type="text" id="key" class="orb-input" placeholder="PASSKEY">
+                <button class="orb-btn" onclick="unlockOrb()">login</button>
+                <div class="orb-actions" style="margin-top: 8px;">
+                    <span class="action-icon" onclick="minimizeOrb()">HIDE</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Panel -->
+            <div id="main-display" style="display: none; width: 100%; text-align: center;">
+                <div class="result-container">
+                    <div class="res-val" id="orb-res">WAITING</div>
+                    <div class="timer-box"><span id="orb-timer">30</span>S</div>
+                </div>
+                
+                <div class="orb-footer">
+                    <a href="https://t.me/FUTURE_BANGLADESHBD" target="_blank" class="tg-orb">TELEGRAM</a>
+                    <div class="orb-actions">
+                        <span class="action-icon" onclick="minimizeOrb()">HIDE</span>
+                        <span class="action-icon" onclick="location.reload()" style="color: #ff4444;">EXIT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Trigger with custom Image (আপনার দেওয়া ইমেজের ডিরেক্ট লিঙ্ক বসানো হয়েছে) -->
+    <div id="mini-orb" onclick="maximizeOrb()">
+        <img src="https://i.ibb.co/pvgPPz5Y/IMG-20260626-062932-703.jpg" alt="Logo">
+    </div>
+
+    <script>
+        const PASS_KEY = "1234"; 
+        
+        const orb = document.getElementById("dragOrb");
+        const miniOrb = document.getElementById("mini-orb");
+
+        // Unlock System
+        function unlockOrb() {
+            const input = document.getElementById("key").value;
+            if(input === PASS_KEY) {
+                document.getElementById("orb-login").style.display = "none";
+                document.getElementById("main-display").style.display = "flex";
+                document.getElementById("main-display").style.flexDirection = "column";
+                startEngine();
+            } else {
+                alert("ACCESS DENIED: WRONG PASSWORD");
+            }
+        }
+
+        // --- উন্নত ড্র্যাগিং সিস্টেম (লগইন এর আগে ও পরে সব সময় কাজ করবে) ---
+        function makeDraggable(element) {
+            let isDragging = false;
+            let offset = { x: 0, y: 0 };
+
+            element.addEventListener('touchstart', (e) => {
+                if(e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+                isDragging = true;
+                offset.x = e.touches[0].clientX - element.offsetLeft;
+                offset.y = e.touches[0].clientY - element.offsetTop;
+            }, { passive: false });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                let left = e.touches[0].clientX - offset.x;
+                let top = e.touches[0].clientY - offset.y;
+                
+                // স্ক্রিনের বাইরে যাওয়া আটকানোর জন্য বাউন্ডারি সেট
+                if (left < 0) left = 0;
+                if (top < 0) top = 0;
+                if (left > window.innerWidth - element.offsetWidth) left = window.innerWidth - element.offsetWidth;
+                if (top > window.innerHeight - element.offsetHeight) top = window.innerHeight - element.offsetHeight;
+
+                element.style.left = left + "px";
+                element.style.top = top + "px";
+                e.preventDefault();
+            }, { passive: false });
+
+            document.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+        }
+
+        // দুটো এলিমেন্টকেই ড্র্যাগেবল করা হলো
+        makeDraggable(orb);
+        makeDraggable(miniOrb);
+
+        // UI Controls
+        window.minimizeOrb = () => {
+            orb.style.display = "none";
+            miniOrb.style.display = "flex";
+        };
+
+        window.maximizeOrb = () => {
+            orb.style.display = "flex";
+            miniOrb.style.display = "none";
+        };
+
+        // Engine Logic
+        function startEngine() {
+            const data = ["BIG 7,9", "SMALL 0,2", "SMALL 1,3", "BIG 6,8", "BIG 5", "SMALL 4"];
+            
+            function update() {
+                const now = new Date();
+                const ms = now.getTime();
+                
+                const periodIndex = Math.floor(ms / 30000);
+                const seed = periodIndex * 123;
+                const idx = Math.floor(Math.abs(Math.sin(seed) * data.length)) % data.length;
+                
+                const result = data[idx];
+                const resEl = document.getElementById("orb-res");
+                
+                resEl.innerText = result;
+                resEl.style.color = result.includes("BIG") ? "#00f3ff" : "#ff00ff";
+                resEl.style.textShadow = `0 0 10px ${resEl.style.color}`;
+
+                const timer = 30 - (Math.floor(ms / 1000) % 30);
+                document.getElementById("orb-timer").innerText = timer;
+                document.getElementById("orb-clock").innerText = now.toLocaleTimeString();
+            }
+
+            setInterval(update, 1000);
+            update();
+        }
+
+        // ক্লক সিস্টেম সবসময় চালু রাখার জন্য
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById("orb-clock").innerText = now.toLocaleTimeString();
+        }, 1000);
+    </script>
+</body>
+</html>
