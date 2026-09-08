@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://pl31214545.profitableratecpmnetwork.com/36/65/78/366578e1e494adc63ad8464efef3aea9.js"></script>
+<script src="https://pl31214544.profitableratecpmnetwork.com/bc/f4/b8/bcf4b8807d0b59c65f1abf8ddd9bcf01.js"></script>
+<script async="async" data-cfasync="false" src="https://pl31214733.profitableratecpmnetwork.com/cc30b6676df8c86a6a8c31266bde1198/invoke.js"></script>
+<div id="container-cc30b6676df8c86a6a8c31266bde1198"></div>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Tic Tac Toe</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f7fb;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* ─── WELCOME BANNER OVERLAY ─── */
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            padding: 24px;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            background: #ffffff;
+            max-width: 520px;
+            width: 100%;
+            padding: 48px 40px 40px;
+            border-radius: 36px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: floatUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4f46e5, #ec4899, #4f46e5);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 200% 0%;
+            }
+        }
+
+        .welcome-icon {
+            font-size: 4.2rem;
+            margin-bottom: 8px;
+            display: block;
+            animation: pulseIcon 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseIcon {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.12);
+            }
+        }
+
+        .welcome-card h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-card .sub {
+            font-size: 1.05rem;
+            color: #6b7280;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .welcome-card .tagline {
+            font-size: 0.95rem;
+            color: #9ca3af;
+            margin-bottom: 32px;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .welcome-card .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-card .features span {
+            background: #f3f4f6;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #374151;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .welcome-card .features span::before {
+            content: "✦";
+            color: #4f46e5;
+            font-size: 0.7rem;
+        }
+
+        .play-btn {
+            padding: 16px 48px;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
+            letter-spacing: 0.5px;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(79, 70, 229, 0.45);
+        }
+
+        .play-btn:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── GAME CONTAINER ─── */
+        .game-container {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            animation: fadeIn 0.6s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #222;
+            margin-bottom: 12px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .status {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+            color: #555;
+            min-height: 28px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .status.demo {
+            color: #4f46e5;
+        }
+
+        .status.ready {
+            color: #16a34a;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .cell {
+            aspect-ratio: 1 / 1;
+            background: #f9fbff;
+            border: none;
+            border-radius: 20px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: #222;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .cell:hover:not(.disabled) {
+            transform: translateY(-3px);
+            background: #eef4ff;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .cell.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .cell.x {
+            color: #4f46e5;
+        }
+
+        .cell.o {
+            color: #ec4899;
+        }
+
+        .cell.winner {
+            background: #dff7e3;
+            color: #16a34a;
+            animation: pulse 0.6s infinite alternate;
+        }
+
+        .restart-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 14px;
+            background: #111827;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .restart-btn:hover:not(:disabled) {
+            background: #374151;
+            transform: scale(1.04);
+        }
+
+        .restart-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .cell {
+                font-size: 2rem;
+                border-radius: 16px;
+            }
+
+            .welcome-card {
+                padding: 36px 24px 32px;
+            }
+
+            .welcome-card h2 {
+                font-size: 1.7rem;
+            }
+
+            .welcome-card .features {
+                gap: 10px;
+            }
+
+            .welcome-card .features span {
+                font-size: 0.75rem;
+                padding: 4px 14px;
+            }
+
+            .play-btn {
+                padding: 14px 36px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ WELCOME BANNER ═══ -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card">
+            <span class="welcome-icon">🎮</span>
+            <h2>Welcome!</h2>
+            <p class="sub">Watch the <strong>AI</strong> demonstrate first, then <strong>you</strong> play!</p>
+            <p class="tagline">✨ Learn by watching — then challenge a friend ✨</p>
+
+            <div class="features">
+                <span>AI Demo</span>
+                <span>2 Players</span>
+                <span>Clean Design</span>
+            </div>
+
+            <button class="play-btn" id="playBtn">▶ &nbsp;Watch Demo</button>
+        </div>
+    </div>
+
+    <!-- ═══ GAME ═══ -->
+    <div class="game-container">
+        <h1>Tic Tac Toe</h1>
+
+        <div class="status" id="status">
+            👋 Press "Watch Demo" to begin
+        </div>
+
+        <div class="board" id="board">
+            <button class="cell disabled" data-index="0"></button>
+            <button class="cell disabled" data-index="1"></button>
+            <button class="cell disabled" data-index="2"></button>
+            <button class="cell disabled" data-index="3"></button>
+            <button class="cell disabled" data-index="4"></button>
+            <button class="cell disabled" data-index="5"></button>
+            <button class="cell disabled" data-index="6"></button>
+            <button class="cell disabled" data-index="7"></button>
+            <button class="cell disabled" data-index="8"></button>
+        </div>
+
+        <button class="restart-btn" id="restartBtn" disabled>
+            Restart Game
+        </button>
+    </div>
+
+    <script>
+        // ─── DOM refs ───
+        const cells = document.querySelectorAll(".cell");
+        const statusText = document.getElementById("status");
+        const restartBtn = document.getElementById("restartBtn");
+        const welcomeOverlay = document.getElementById("welcomeOverlay");
+        const playBtn = document.getElementById("playBtn");
+
+        // ─── Game state ───
+        let currentPlayer = "X";
+        let gameActive = false;
+        let boardState = ["", "", "", "", "", "", "", "", ""];
+        let isDemoRunning = false;
+        let isPlayerMode = false;
+        let demoTimeoutId = null;
+
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        // ─── Helper: clear board UI ───
+        function clearBoardUI() {
+            cells.forEach(cell => {
+                cell.textContent = "";
+                cell.classList.remove("x", "o", "winner");
+            });
+        }
+
+        // ─── Helper: reset board state ───
+        function resetBoardState() {
+            boardState = ["", "", "", "", "", "", "", "", ""];
+            clearBoardUI();
+        }
+
+        // ─── Helper: set cells enabled/disabled ───
+        function setCellsEnabled(enabled) {
+            cells.forEach(cell => {
+                if (enabled) {
+                    cell.classList.remove("disabled");
+                } else {
+                    cell.classList.add("disabled");
+                }
+            });
+        }
+
+        // ─── Check winner (returns winner or null) ───
+        function checkWinnerOnBoard(state) {
+            for (let combination of winningCombinations) {
+                const [a, b, c] = combination;
+                if (state[a] && state[a] === state[b] && state[a] === state[c]) {
+                    return { winner: state[a], combo: combination };
+                }
+            }
+            return null;
+        }
+
+        // ─── Check if board is full ───
+        function isBoardFull(state) {
+            return !state.includes("");
+        }
+
+        // ─── Highlight winning cells ───
+        function highlightWinningCells(combo) {
+            combo.forEach(idx => {
+                cells[idx].classList.add("winner");
+            });
+        }
+
+        // ─── Dismiss welcome banner ───
+        function dismissWelcome() {
+            welcomeOverlay.classList.add("hidden");
+            setTimeout(() => {
+                welcomeOverlay.style.display = "none";
+            }, 750);
+        }
+
+        // ─── Start the AI demonstration ───
+        function startDemo() {
+            dismissWelcome();
+
+            // Reset everything
+            resetBoardState();
+            setCellsEnabled(false);
+            restartBtn.disabled = true;
+            isDemoRunning = true;
+            isPlayerMode = false;
+            gameActive = false;
+
+            statusText.textContent = "🤖 AI is demonstrating...";
+            statusText.className = "status demo";
+
+            let demoPlayer = "X";
+            let moveCount = 0;
+            const maxMoves = 9;
+
+            function makeDemoMove() {
+                if (!isDemoRunning) return;
+
+                // Check if board is full or game is over
+                if (isBoardFull(boardState)) {
+                    endDemo("draw");
+                    return;
+                }
+
+                // Check for winner before making a move
+                const winCheck = checkWinnerOnBoard(boardState);
+                if (winCheck) {
+                    highlightWinningCells(winCheck.combo);
+                    endDemo(winCheck.winner);
+                    return;
+                }
+
+                // Get available cells
+                const available = [];
+                boardState.forEach((val, idx) => {
+                    if (val === "") available.push(idx);
+                });
+
+                if (available.length === 0) {
+                    endDemo("draw");
+                    return;
+                }
+
+                // Pick a random available cell (AI move)
+                const randomIdx = available[Math.floor(Math.random() * available.length)];
+                boardState[randomIdx] = demoPlayer;
+                const cell = cells[randomIdx];
+                cell.textContent = demoPlayer;
+                cell.classList.add(demoPlayer.toLowerCase());
+
+                // Update status
+                statusText.textContent = `🤖 AI (${demoPlayer}) plays...`;
+
+                // Check for winner after this move
+                const winCheckAfter = checkWinnerOnBoard(boardState);
+                if (winCheckAfter) {
+                    highlightWinningCells(winCheckAfter.combo);
+                    endDemo(winCheckAfter.winner);
+                    return;
+                }
+
+                if (isBoardFull(boardState)) {
+                    endDemo("draw");
+                    return;
+                }
+
+                // Switch player
+                demoPlayer = demoPlayer === "X" ? "O" : "X";
+                moveCount++;
+
+                // Schedule next move
+                demoTimeoutId = setTimeout(makeDemoMove, 700);
+            }
+
+            // Start the demo after a short delay
+            demoTimeoutId = setTimeout(makeDemoMove, 600);
+        }
+
+        // ─── End the demo ───
+        function endDemo(result) {
+            if (!isDemoRunning) return;
+
+            isDemoRunning = false;
+            if (demoTimeoutId) {
+                clearTimeout(demoTimeoutId);
+                demoTimeoutId = null;
+            }
+
+            // Show result
+            if (result === "draw") {
+                statusText.textContent = "🤝 AI Demo: It's a Draw!";
+            } else {
+                statusText.textContent = `🎉 AI Demo: Player ${result} Wins!`;
+            }
+
+            // After a moment, transition to player mode
+            setTimeout(() => {
+                // Reset for player
+                resetBoardState();
+                setCellsEnabled(true);
+                restartBtn.disabled = false;
+                isPlayerMode = true;
+                gameActive = true;
+                currentPlayer = "X";
+
+                statusText.textContent = "🎓 Now you play! Player X's Turn";
+                statusText.className = "status ready";
+
+                // Remove winner highlights
+                cells.forEach(cell => cell.classList.remove("winner"));
+            }, 2000);
+        }
+
+        // ─── Player move handler ───
+        function handleCellClick(e) {
+            if (!isPlayerMode || !gameActive || isDemoRunning) return;
+
+            const cell = e.target;
+            const index = cell.getAttribute("data-index");
+
+            if (boardState[index] !== "" || !gameActive) {
+                return;
+            }
+
+            // Make the move
+            boardState[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+            cell.classList.add(currentPlayer.toLowerCase());
+
+            // Check for winner
+            const winCheck = checkWinnerOnBoard(boardState);
+            if (winCheck) {
+                highlightWinningCells(winCheck.combo);
+                statusText.textContent = `🎉 Player ${currentPlayer} Wins!`;
+                gameActive = false;
+                return;
+            }
+
+            if (isBoardFull(boardState)) {
+                statusText.textContent = "🤝 It's a Draw!";
+                gameActive = false;
+                return;
+            }
+
+            // Switch player
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            statusText.textContent = `Player ${currentPlayer}'s Turn`;
+        }
+
+        // ─── Restart game (player mode) ───
+        function restartGame() {
+            if (isDemoRunning) {
+                // If demo is running, stop it and go to player mode
+                isDemoRunning = false;
+                if (demoTimeoutId) {
+                    clearTimeout(demoTimeoutId);
+                    demoTimeoutId = null;
+                }
+                resetBoardState();
+                setCellsEnabled(true);
+                restartBtn.disabled = false;
+                isPlayerMode = true;
+                gameActive = true;
+                currentPlayer = "X";
+                statusText.textContent = "🎓 Now you play! Player X's Turn";
+                statusText.className = "status ready";
+                cells.forEach(cell => cell.classList.remove("winner"));
+                return;
+            }
+
+            if (!isPlayerMode) return;
+
+            resetBoardState();
+            currentPlayer = "X";
+            gameActive = true;
+            statusText.textContent = "Player X's Turn";
+            statusText.className = "status";
+            cells.forEach(cell => cell.classList.remove("winner"));
+        }
+
+        // ─── Event listeners ───
+        playBtn.addEventListener("click", startDemo);
+
+        // Click on overlay background to start demo (optional)
+        welcomeOverlay.addEventListener("click", (e) => {
+            if (e.target === welcomeOverlay) {
+                startDemo();
+            }
+        });
+
+        cells.forEach(cell => {
+            cell.addEventListener("click", handleCellClick);
+        });
+
+        restartBtn.addEventListener("click", restartGame);
+
+        // ─── Keyboard: Escape to dismiss banner ───
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !welcomeOverlay.classList.contains("hidden")) {
+                startDemo();
+            }
+        });
+
+        // ─── Init: cells start disabled ───
+        setCellsEnabled(false);
+
+        console.log("🎮 Tic Tac Toe loaded — click 'Watch Demo' to begin!");
+    </script>
+
+</body>
+</html>
